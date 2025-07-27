@@ -1,15 +1,16 @@
-FROM python:3.10-slim
+FROM python:3.10-bullseye
 
-# Instalacja systemowych zależności dla libGL, Pillow, pdf2slides
+# Instalacja systemowych bibliotek dla pdf2slides, Pillow, OpenGL
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    poppler-utils \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Ustaw katalog roboczy
 WORKDIR /app
 
-# Skopiuj requirements.txt i zainstaluj zależności Pythona
+# Skopiuj pliki requirements.txt i zainstaluj Python dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
